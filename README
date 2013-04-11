@@ -1,0 +1,23 @@
+In acest proiect am implementat un shell simplu care suporta executia de
+comenzi externe cu argumente multiple, comenzi interne, redirectari, 
+pipe-uri. Shell-ul suporta executia de comenzi compuse, cu oricati
+operatori.
+Proiectul functioneaza in modul urmator: in functia 'main' se citeste linie
+cu linie de la tastatura sau din fisier, se parseaza aceasta folosind
+parserul oferit, dupa care se apeleaza functia 'parse_command' care 
+va executa arborele construit de parser in mode recursiv. Aceasta 
+functie va trata in mod corespunzator diferitele cazuri de input: 
+simple command,  operator de secventiere, operator de executare in
+paralel, operatori de conditionare, pipe-uri. Daca este o comanda simpla
+atunci se va verifica daca aceasta comanda provine dintr-un pipe sau
+in urma unei executii in paralel, si daca da se va apela pentru executie
+functia 'parse_parallel_or_pipe' in care se va executa comanda in 
+procesul curent, daca nu se va apela functia parse_simple care va creea
+un proces copil ce va executa comanda. In cazul celorlalti operatori,
+se va apela corespunzator recursiv acceasi functie fie direct, tinand
+cont de anumite conditii in functie de ce operator este vorba, fie
+apeland o alta functie ce va apela recursiv 'parse_command'(vezi
+'do_on_pipe', 'do_on_parallel'). Pentru fiecare din cazuri se verifica
+daca sunt prezente redirectari, si daca da se trateaza conform cu 
+arborele construit de parser.
+Proiectul este implementat in Ubuntu.
